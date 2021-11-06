@@ -1,0 +1,10 @@
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\bin\Debug\Checkmate.exe.config
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\bin\Debug\Checkmate.exe
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\bin\Debug\Checkmate.pdb
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.csprojAssemblyReference.cache
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.Properties.Resources.resources
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.csproj.GenerateResource.cache
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.csproj.CoreCompileInputs.cache
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.exe
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.pdb
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.Chess.resources
