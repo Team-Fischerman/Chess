@@ -188,11 +188,9 @@ namespace Checkmate
                 piece.ShowLegalMoves(board, location);
                 HighlightLegalMove();
                 
-                
             }
-            
-            
-          //  MessageBox.Show("" + piece);
+
+            //  MessageBox.Show("" + piece);
           
           
             bool movePiece = currentPiece == null;
@@ -220,6 +218,15 @@ namespace Checkmate
                        
                        // set piece in desired square (IN MEMORY)
                        board.SetCell(location.X,location.Y, new Cell(location.X,location.Y, currentPiece));
+                       
+                       
+                       
+                       // Pawn can move up one square
+                       if (currentPiece is Pawn)
+                       {
+                           currentPiece.SetPawnMoved(true);
+                       }
+                       
                    }
                 
                 

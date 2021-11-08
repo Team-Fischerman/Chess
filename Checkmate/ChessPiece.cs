@@ -7,6 +7,11 @@ namespace Checkmate
 
         protected PieceColor pieceColor;
 
+
+        // pawn variable
+        protected bool hasMoved;
+       
+
         public ChessPiece(PieceColor pieceColor)
         {
             this.pieceColor = pieceColor;
@@ -23,7 +28,11 @@ namespace Checkmate
         {
             ResetLegalMoves(board);
         }
-        
+
+        public void SetPawnMoved(bool moved)
+        {
+            this.hasMoved = moved;
+        }
         
         
 
@@ -49,7 +58,8 @@ namespace Checkmate
                 }
             }
         }
-        
+
+      
         
         public enum PieceColor
         {
