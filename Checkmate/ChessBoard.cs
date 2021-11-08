@@ -1,18 +1,29 @@
-﻿using Checkmate.ChessPieces;
+﻿using System.Drawing;
+using Checkmate.ChessPieces;
 
 namespace Checkmate
 {
     public class ChessBoard
     {
         private const int BOARD_SIZE = 8;
-
-        public Cell[,] board { get; set; }
+        public Cell[,] board { get; set;}
+        
+        
 
         public ChessBoard()
         {
             board = new Cell[BOARD_SIZE, BOARD_SIZE];
             
             InitializeBoard();
+            
+            
+        }
+
+
+  
+        public void SetCell(int x, int y,Cell cell)
+        {
+            board[x, y] = cell;
         }
 
 
@@ -28,7 +39,6 @@ namespace Checkmate
             board[0,5] =  new Cell(0, 5, new Bishop(ChessPiece.PieceColor.BLACK));
             board[0,6] =  new Cell(0, 6, new Knight(ChessPiece.PieceColor.BLACK));
             board[0,7] =  new Cell(0, 7, new Rook  (ChessPiece.PieceColor.BLACK));
-            
             
             
             // setting white pieces through memory
