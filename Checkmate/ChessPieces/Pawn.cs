@@ -45,11 +45,21 @@ namespace Checkmate.ChessPieces
             }
             else
             {
-                if (isSafe(location.X + 1, location.Y))
-                    board.board[location.X + 1, location.Y].IsLegal = true;
+
+                if (!hasMoved)
+                {
+                    if (isSafe(location.X + 1, location.Y))
+                        board.board[location.X + 1, location.Y].IsLegal = true;
                 
-                if (isSafe(location.X + 2, location.Y))
-                    board.board[location.X + 2, location.Y].IsLegal = true;
+                    if (isSafe(location.X + 2, location.Y))
+                        board.board[location.X + 2, location.Y].IsLegal = true;
+                }
+                else
+                {
+                    if (isSafe(location.X + 1, location.Y))
+                        board.board[location.X + 1, location.Y].IsLegal = true;
+                }
+            
             
             }
         }
