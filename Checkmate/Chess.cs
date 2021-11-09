@@ -25,9 +25,9 @@ namespace Checkmate
             int panelSize = panel1.Width / 8;
             panel1.Height = panel1.Width;
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < board.Size; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < board.Size; j++)
                 {
                     // create panel for each row, column
                     chessBoard[i, j] = new Panel();
@@ -63,7 +63,7 @@ namespace Checkmate
         /// </summary>
         private void SetUpPieces()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < board.Size; i++)
             {
                 // Setting up black and white piece pawn images on the board
                 chessBoard[1, i].BackgroundImage = new Pawn(ChessPiece.PieceColor.BLACK).PieceImage;
@@ -128,9 +128,9 @@ namespace Checkmate
         
         private void HighlightLegalMove()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < board.Size; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < board.Size; j++)
                 {
                     
                     if (board.board[i, j].IsLegal)
@@ -144,9 +144,9 @@ namespace Checkmate
 
         private void ResettingBoardColors()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < board.Size; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < board.Size; j++)
                 {
 
                     if (chessBoard[i,j].BackColor == Color.Red)

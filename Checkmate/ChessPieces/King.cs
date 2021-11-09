@@ -12,7 +12,40 @@ namespace Checkmate.ChessPieces
 
         public override void ShowLegalMoves(ChessBoard board, Point location)
         {
-            throw new System.NotImplementedException();
+            base.ShowLegalMoves(board,location);
+            if(isSafe(location.X + 1, location.Y)) {
+                board.board[location.X + 1, location.Y].IsLegal = true;
+            }
+
+            if(isSafe(location.X - 1, location.Y)) {
+                board.board[location.X - 1, location.Y].IsLegal = true;
+            } 
+                            
+            if(isSafe(location.X, location.Y + 1)) {
+                board.board[location.X, location.Y + 1].IsLegal = true;
+            } 
+                            
+            if(isSafe(location.X, location.Y - 1)) {
+                board.board[location.X, location.Y - 1].IsLegal = true;
+            }
+
+            if(isSafe(location.X - 1, location.Y - 1)) {
+                board.board[location.X - 1, location.Y - 1].IsLegal = true;
+            }
+
+            if(isSafe(location.X + 1, location.Y + 1)) {
+                board.board[location.X + 1, location.Y + 1].IsLegal = true;
+            }
+
+            if(isSafe(location.X + 1, location.Y - 1)) {
+                board.board[location.X + 1, location.Y - 1].IsLegal = true;
+            }
+
+
+            if(isSafe(location.X - 1, location.Y + 1)) {
+                board.board[location.X - 1, location.Y + 1].IsLegal = true;
+            }
+
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Checkmate
 
         public void SetPawnMoved(bool moved)
         {
-            this.hasMoved = moved;
+            hasMoved = moved;
         }
         
         

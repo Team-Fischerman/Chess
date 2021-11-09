@@ -5,19 +5,25 @@ namespace Checkmate
 {
     public class ChessBoard
     {
-        private const int BOARD_SIZE = 8;
+        public int Size{ get; private set; }
         public Cell[,] board { get; set;}
         
         
 
         public ChessBoard()
         {
-            board = new Cell[BOARD_SIZE, BOARD_SIZE];
+            
+            Size = 8;
+            board = new Cell[Size, Size];
+            
             
             InitializeBoard();
             
             
         }
+        
+        
+        
 
 
   
@@ -55,7 +61,7 @@ namespace Checkmate
             // setting free squares to null and not busy
             for (int i = 2; i < 6; i++)
             {
-                for (int j = 0; j < BOARD_SIZE; j++)
+                for (int j = 0; j < Size; j++)
                 {
                     board[i, j] = new Cell(i, j, null);
                    
