@@ -167,21 +167,9 @@ namespace Checkmate
             Cell currentLocation = board.board[location.X, location.Y];
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
 
-          
-            // TODO Move Piece
-            // 1. Check if location is occupied, then get the piece on that square
-            // 2. get the piece legal moves 
-            // 3. Move piece based on what red square user clicked 
             
-            
-            // TODO Remove red squares when user selects another piece?
-            // If a user selects a square with a piece, then it'll show legal moves for that piece
-            // Now when the user selects another user or off the screen then clear those red 
-
-            
-           
             ChessPiece piece = currentLocation.GetChessPiece();
-            // Show legal moves for piece
+            // Show legal moves for each specified chess piece
             if (currentLocation.IsOccupied)
             {
                 
@@ -190,10 +178,11 @@ namespace Checkmate
                 
             }
 
-            //  MessageBox.Show("" + piece);
           
           
+            #region Start of being able to move piece
             bool movePiece = currentPiece == null;
+            // selects a chess piece
             if (movePiece)
             {
                 
@@ -207,21 +196,19 @@ namespace Checkmate
             else
             {
                 // move piece only in RED squares
-
-                   if (clickedPiece.BackColor == Color.Red)
+                if (clickedPiece.BackColor == Color.Red)
                    {
                        clickedPiece.BackgroundImage = currentPiece.PieceImage;
                        temp.BackgroundImage = null;
 
-                       // resetting 
+                       // resetting red squares when chess piece has moved
                        ResettingBoardColors();
                        
                        // set piece in desired square (IN MEMORY)
                        board.SetCell(location.X,location.Y, new Cell(location.X,location.Y, currentPiece));
                        
                        
-                       
-                       // Pawn can move up one square
+                       // Pawn can move up one square after initial turn
                        if (currentPiece is Pawn)
                        {
                            currentPiece.SetPawnMoved(true);
@@ -232,6 +219,7 @@ namespace Checkmate
                 
                 currentPiece = null;
             }
+            #endregion END OF MOVING PIECE
 
 
         

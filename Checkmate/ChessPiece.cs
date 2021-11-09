@@ -26,6 +26,7 @@ namespace Checkmate
 
         public virtual void ShowLegalMoves(ChessBoard board, Point location)
         {
+            // Resets legal move from previous piece
             ResetLegalMoves(board);
         }
 
@@ -48,6 +49,10 @@ namespace Checkmate
         }
 
 
+        /// <summary>
+        /// resets the legal moves from the previous selected piece
+        /// </summary>
+        /// <param name="board"></param>
         private void ResetLegalMoves(ChessBoard board)
         {
             for (int i = 0; i < 8; i++)

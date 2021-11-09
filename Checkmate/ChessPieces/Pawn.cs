@@ -25,6 +25,7 @@ namespace Checkmate.ChessPieces
             // Legal moves for white pawns and black pawns
             if (pieceColor == PieceColor.WHITE)
             {
+                // if hasMoved == false, then pawn the option to move up 2 squares
                 if (!hasMoved)
                 {
                     
@@ -34,6 +35,7 @@ namespace Checkmate.ChessPieces
                     if (isSafe(location.X - 2, location.Y))
                         board.board[location.X - 2, location.Y].IsLegal = true;
                 }
+                // otherwise the pawn will now have the option to move up 2 squares
                 else
                 {
                     
