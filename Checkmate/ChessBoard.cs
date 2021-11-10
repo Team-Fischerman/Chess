@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿
 using Checkmate.ChessPieces;
 
 namespace Checkmate
@@ -23,10 +23,6 @@ namespace Checkmate
         }
         
         
-        
-
-
-  
         public void SetCell(int x, int y,Cell cell)
         {
             board[x, y] = cell;

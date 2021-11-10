@@ -6,8 +6,6 @@ namespace Checkmate.ChessPieces
     {
         
         
-       
-       
         public Pawn(PieceColor pieceColor) : base(pieceColor)
         {
             PieceImage = pieceColor == PieceColor.BLACK ? Properties.Resources.BPawn : Properties.Resources.WPawn;
@@ -17,10 +15,11 @@ namespace Checkmate.ChessPieces
         public override void ShowLegalMoves(ChessBoard board, Point location)
         {
             
-            base.ShowLegalMoves(board,location);
+             base.ShowLegalMoves(board,location);
+
             
             
-            
+      
 
             // Legal moves for white pawns and black pawns
             if (pieceColor == PieceColor.WHITE)
@@ -64,7 +63,11 @@ namespace Checkmate.ChessPieces
             
             
             }
+
+
+          
         }
+        
 
 
     

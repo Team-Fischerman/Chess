@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Checkmate
 {
@@ -28,6 +29,8 @@ namespace Checkmate
         {
             // Resets legal move from previous piece
             ResetLegalMoves(board);
+            
+            
         }
 
         public void SetPawnMoved(bool moved)
@@ -55,11 +58,14 @@ namespace Checkmate
         /// <param name="board"></param>
         private void ResetLegalMoves(ChessBoard board)
         {
+            
+            
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
                     board.board[i, j].IsLegal = false;
+                   
                 }
             }
         }

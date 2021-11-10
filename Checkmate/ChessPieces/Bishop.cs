@@ -13,6 +13,7 @@ namespace Checkmate.ChessPieces
         {
             
             base.ShowLegalMoves(board,location);
+            
             for(int i = 0; i < board.Size; i++) 
             {
                             

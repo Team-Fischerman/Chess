@@ -11,7 +11,7 @@ namespace Checkmate
         private Panel[,] chessBoard = new Panel[8, 8];
         private ChessPiece currentPiece;
         private Panel temp;
-     
+
 
         public Chess()
         {
@@ -19,6 +19,7 @@ namespace Checkmate
             CreateVisualBoard();
         }
 
+        
 
         private void CreateVisualBoard()
         {
@@ -125,7 +126,10 @@ namespace Checkmate
             return (i % 2 == 0 && j % 2 == 0 || i % 2 != 0 && j % 2 != 0);
         }
 
-        
+
+        /// <summary>
+        /// Highlights legal moves red for a chess piece
+        /// </summary>
         private void HighlightLegalMove()
         {
             for (int i = 0; i < board.Size; i++)
@@ -133,11 +137,17 @@ namespace Checkmate
                 for (int j = 0; j < board.Size; j++)
                 {
                     
+                    // Highlight all moves for chess piece
                     if (board.board[i, j].IsLegal)
                     {
                         chessBoard[i, j].BackColor = Color.Red;
                     }
                     
+                    // When user selects another piece reset the previous chess pieces legal moves
+                    else
+                    {
+                        SettingUpEachSquare(i,j,Color.White,Color.DarkGreen);
+                    }
                 }
             }
         }
@@ -148,16 +158,12 @@ namespace Checkmate
             {
                 for (int j = 0; j < board.Size; j++)
                 {
-
-                    if (chessBoard[i,j].BackColor == Color.Red)
+                    if (chessBoard[i, j].BackColor == Color.Red)
                     {
-                        SettingUpEachSquare(i,j,Color.White,Color.DarkGreen);
+                        SettingUpEachSquare(i, j, Color.White, Color.DarkGreen);
                     }
-                    
-                   
                 }
             }
-
         }
 
         private void pieceClick(object sender, EventArgs e)
@@ -167,63 +173,60 @@ namespace Checkmate
             Cell currentLocation = board.board[location.X, location.Y];
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
 
-            
+
             ChessPiece piece = currentLocation.GetChessPiece();
             // Show legal moves for each specified chess piece
             if (currentLocation.IsOccupied)
             {
-                
                 piece.ShowLegalMoves(board, location);
                 HighlightLegalMove();
-                
             }
+            // else
+            // {
+            //     ResettingBoardColors();
+            // }
 
-          
-          
+
             #region Start of being able to move piece
+
             bool movePiece = currentPiece == null;
             // selects a chess piece
             if (movePiece)
             {
-                
                 // get piece that user clicked
-                board.SetCell(location.X,location.Y, new Cell(location.X,location.Y, null));
+                board.SetCell(location.X, location.Y, new Cell(location.X, location.Y, null));
                 temp = clickedPiece;
                 currentPiece = piece;
-                
-                
             }
             else
             {
                 // move piece only in RED squares
                 if (clickedPiece.BackColor == Color.Red)
-                   {
-                       clickedPiece.BackgroundImage = currentPiece.PieceImage;
-                       temp.BackgroundImage = null;
+                {
+                    clickedPiece.BackgroundImage = currentPiece.PieceImage;
+                    temp.BackgroundImage = null;
 
-                       // resetting red squares when chess piece has moved
-                       ResettingBoardColors();
-                       
-                       // set piece in desired square (IN MEMORY)
-                       board.SetCell(location.X,location.Y, new Cell(location.X,location.Y, currentPiece));
-                       
-                       
-                       // Pawn can move up one square after initial turn
-                       if (currentPiece is Pawn)
-                       {
-                           currentPiece.SetPawnMoved(true);
-                       }
-                       
-                   }
-                
-                
+                    // resetting red squares when chess piece has moved
+                    ResettingBoardColors();
+
+                    // set piece in desired square (IN MEMORY)
+                    board.SetCell(location.X, location.Y, new Cell(location.X, location.Y, currentPiece));
+
+
+                    // Pawn can move up one square after initial turn
+                    if (currentPiece is Pawn)
+                    {
+                        currentPiece.SetPawnMoved(true);
+                    }
+                }
+
+
                 currentPiece = null;
             }
-            #endregion END OF MOVING PIECE
 
+            #endregion END OF MOVING PIECE
+        }
 
         
-
-        }
     }
 }
