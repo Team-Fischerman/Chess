@@ -16,16 +16,29 @@ namespace Checkmate
             Size = 8;
             board = new Cell[Size, Size];
             
-            
             InitializeBoard();
             
             
+        }
+
+
+        public void ClearBoard()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    board[i, j].IsLegal = false;
+                   
+                }
+            }
         }
         
         
         public void SetCell(int x, int y,Cell cell)
         {
             board[x, y] = cell;
+            
         }
 
 

@@ -11,7 +11,7 @@ namespace Checkmate
 
         // pawn variable
         protected bool hasMoved;
-       
+     
 
         public ChessPiece(PieceColor pieceColor)
         {

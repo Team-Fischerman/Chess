@@ -19,7 +19,7 @@ namespace Checkmate.ChessPieces
                 if(isSafe(location.X - i, location.Y)) {
                     board.board[location.X - i, location.Y].IsLegal = true;
                 }
-
+                
                 if(isSafe(location.X + i, location.Y)) {
                     board.board[location.X + i, location.Y].IsLegal = true;
                 }
