@@ -14,41 +14,122 @@ namespace Checkmate.ChessPieces
             
             base.ShowLegalMoves(board,location);
             
-            for(int i = 0; i < board.Size; i++) 
+            for (int i = 1; i < board.Size; i++)
             {
-                if(isSafe(location.X - i, location.Y)) {
+                if (isSafe(location.X - i, location.Y))
+                {
                     board.board[location.X - i, location.Y].IsLegal = true;
+                    if (board.board[location.X - i, location.Y].IsOccupied)
+                    {
+                        break;
+                    }
+
                 }
-                
-                if(isSafe(location.X + i, location.Y)) {
+            }
+            
+            
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X + i, location.Y))
+                {
                     board.board[location.X + i, location.Y].IsLegal = true;
-                }
+                    if (board.board[location.X + i, location.Y].IsOccupied)
+                    {
+                        
+                        break;
+                        
+                    }
 
-                if(isSafe(location.X, location.Y + i)) {
-                    board.board[location.X, location.Y + i].IsLegal = true;
                 }
+            }
 
-                if(isSafe(location.X, location.Y - i)) {
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X, location.Y + i))
+                {
+                    board.board[location.X, location.Y +i].IsLegal = true;
+                    if (board.board[location.X, location.Y + i].IsOccupied)
+                    {
+                        break;
+                    }
+
+                }
+            }
+
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X, location.Y - i))
+                {
                     board.board[location.X, location.Y - i].IsLegal = true;
-                }
+                    if (board.board[location.X, location.Y - i].IsOccupied)
+                    {
+                        break;
+                    }
 
-                if(isSafe(location.X - i, location.Y - i)) {
+                }
+            }
+
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X - i, location.Y - i))
+                {
                     board.board[location.X - i, location.Y - i].IsLegal = true;
-                }
+                    if (board.board[location.X - i, location.Y - i].IsOccupied)
+                    {
+                        break;
+                    }
 
-                if(isSafe(location.X + i, location.Y + i)) {
+                }
+            }
+
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X + i, location.Y + i))
+                {
                     board.board[location.X + i, location.Y + i].IsLegal = true;
-                }
+                    if (board.board[location.X + i, location.Y + i].IsOccupied)
+                    {
+                        break;
+                    }
 
-                if(isSafe(location.X + i, location.Y - i)) {
+                }
+            }
+
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X + i, location.Y - i))
+                {
                     board.board[location.X + i, location.Y - i].IsLegal = true;
-                }
+                    if (board.board[location.X + i, location.Y - i].IsOccupied)
+                    {
+                        break;
+                    }
 
-                if(isSafe(location.X - i, location.Y + i)) {
+                }
+            }
+
+            for (int i = 1; i < board.Size; i++)
+            {
+
+                if (isSafe(location.X - i, location.Y + i))
+                {
                     board.board[location.X - i, location.Y + i].IsLegal = true;
-                }
+                    if (board.board[location.X - i, location.Y + i].IsOccupied)
+                    {
+                        break;
+                    }
 
+                }
             }
         }
+           
+
+            
+        }
     }
-}

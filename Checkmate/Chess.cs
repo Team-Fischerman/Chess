@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using Checkmate.ChessPieces;
 
@@ -13,10 +14,10 @@ namespace Checkmate
         private ChessPiece currentPiece;
         private Panel tempPanel;
         private Cell clickedCell;
+        private Thread workerThread;
         
-        private ChessPiece.PieceColor pieceColor = ChessPiece.PieceColor.WHITE;
-
         private bool whiteTurn;
+        private bool legal;
 
 
         public Chess()
@@ -26,10 +27,6 @@ namespace Checkmate
 
             whiteTurn = true;
         }
-
-
-     
-
 
         private void CreateVisualBoard()
         {
@@ -61,7 +58,7 @@ namespace Checkmate
 
 
                     // Colors each square 
-                    SettingUpEachSquare(i, j, Color.White, Color.DarkGreen);
+                    SettingUpEachSquare(i, j, Color.White, Color.SandyBrown);
                 }
             }
 
@@ -147,8 +144,10 @@ namespace Checkmate
                 {
                     // Highlight all moves for chess piece
                     if (board.board[i, j].IsLegal && !board.board[i, j].IsOccupied)
-                    {
+                    { 
+                        
                         chessBoard[i, j].BackColor = Color.Red;
+                        
                     }
 
                     else if (board.board[i, j].IsLegal && board.board[i, j].IsOccupied)
@@ -156,6 +155,7 @@ namespace Checkmate
                         if (board.board[i, j].GetChessPiece().GetPieceColor() != piece.GetPieceColor())
                         {
                             chessBoard[i, j].BackColor = Color.Red;
+                            
                         }
                     }
                 }
@@ -170,42 +170,47 @@ namespace Checkmate
                 {
                     if (chessBoard[i, j].BackColor == Color.Red)
                     {
-                        SettingUpEachSquare(i, j, Color.White, Color.DarkGreen);
+                        SettingUpEachSquare(i, j, Color.White, Color.SandyBrown);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Turn based system. 
+        /// </summary>
+        /// <param name="currentCell"></param>
+        /// <param name="piece"></param>
+        /// <param name="location"></param>
         private void SwapTurn(Cell currentCell,ChessPiece piece, Point location)
         {
             // Show legal moves for respective turn
-            if (whiteTurn)
-            {
-                if (currentCell.IsOccupied)
-                {
+            ShowMoves(currentCell, piece, whiteTurn ? ChessPiece.PieceColor.WHITE : ChessPiece.PieceColor.BLACK, location);
+        }
 
-                    if (piece.GetPieceColor() == ChessPiece.PieceColor.WHITE)
-                    {
-                        ResettingBoardColors();
-                        piece.ShowLegalMoves(board,location);
-                        HighlightLegalMove(piece);
-                    }
-                  
-                }
-            }
-            else
+        
+        private void ShowMoves(Cell currentCell,ChessPiece piece,ChessPiece.PieceColor pieceColor,Point location)
+        {
+            if (currentCell.IsOccupied)
             {
-                if (currentCell.IsOccupied)
+                    
+                if (piece.GetPieceColor() == pieceColor)
                 {
-
-                    if (piece.GetPieceColor() == ChessPiece.PieceColor.BLACK)
-                    {
-                        ResettingBoardColors();
-                        piece.ShowLegalMoves(board,location);
-                        HighlightLegalMove(piece);
-                    }
-                  
+                    ResettingBoardColors();
+                    piece.ShowLegalMoves(board,location);
+                    HighlightLegalMove(piece);
                 }
+                else
+                {
+                   
+                    /**
+                     * disables red square when player clicks on another colors chess piece
+                     * e.g if user clicks on a white piece, then the legal moves for white piece will show
+                     * but when user clicks on a black piece it will reset white piece red squares
+                     */
+                    // ResettingBoardColors();
+                }
+                  
             }
         }
 
@@ -220,15 +225,13 @@ namespace Checkmate
             Panel clickedPanel = (Panel) sender;
             Point location = (Point) clickedPanel.Tag;
             Cell currentCell = board.board[location.X, location.Y];
+            
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
-
-
+            
+            
             ChessPiece piece = currentCell.GetChessPiece();
-
             
             SwapTurn(currentCell,piece,location);
-            
-
             
             #region Start of being able to move piece
 
@@ -257,13 +260,23 @@ namespace Checkmate
                     if (currentPiece is Pawn)
                     {
                         currentPiece.SetPawnMoved(true);
+
+                        if (currentPiece.GetPieceColor() == ChessPiece.PieceColor.WHITE)
+                        {
+                            // check location
+                            if (location == new Point(0, 5))
+                            {
+                                MessageBox.Show("[TEST] PAWN TO QUEEN");
+                            }
+                        }
+                        
                     }
 
-                    board.SetCell(clickedCell.RowNum, clickedCell.ColNum,
-                        new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
+                    board.SetCell(clickedCell.RowNum, clickedCell.ColNum, new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
 
                     // swapping turns
                     whiteTurn = !whiteTurn;
+                    
                 }
 
                 currentPiece = null;
@@ -276,6 +289,62 @@ namespace Checkmate
         private bool PlayerHasMoved(Panel clickedPanel)
         {
             return clickedPanel.BackColor == Color.Red;
+        }
+
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            
+            
+            // creates new homepage instance
+            HomePage home = new HomePage();
+
+            // hides chess game
+            Hide();
+
+            // shows homepage
+            home.ShowDialog();
+
+            // closes chess game
+            Close();
+            
+        }
+        
+        
+        private void DoTimeConsumingWork()
+        {
+            Thread.Sleep(1000);
+        }
+
+        private void btn_resign_Click(object sender, EventArgs e)
+        {
+            label_winner.Text = "The Winner Is...";
+
+            // makes rest of code wait for workerThread
+            workerThread = new Thread(DoTimeConsumingWork);
+
+            // workerThread starting
+            workerThread.Start();
+
+            // workerThread completing execution (forcing main thread to wait)
+            workerThread.Join();
+
+            // stops background music
+            // backgroundMusic.Stop();
+
+            // creates new homepage instance
+            HomePage home = new HomePage();
+
+            // hides chess game
+            Hide();
+
+            // shows homepage
+            home.ShowDialog();
+
+            // closes chess game
+            Close();
+            
+            
         }
     }
 }

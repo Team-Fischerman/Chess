@@ -123,6 +123,26 @@ namespace Checkmate.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cookies_Background {
+            get {
+                object obj = ResourceManager.GetObject("Cookies_Background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Dogs_Playing_Chess {
+            get {
+                object obj = ResourceManager.GetObject("Dogs_Playing_Chess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WBishop {
             get {
                 object obj = ResourceManager.GetObject("WBishop", resourceCulture);

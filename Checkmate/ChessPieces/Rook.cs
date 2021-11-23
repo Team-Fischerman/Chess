@@ -11,9 +11,8 @@ namespace Checkmate.ChessPieces
 
         public override void ShowLegalMoves(ChessBoard board, Point location)
         {
-            
             base.ShowLegalMoves(board, location);
-            
+
             for(int i = 0; i < board.Size; i++) 
             {
                 if(isSafe(location.X - i, location.Y)) {
