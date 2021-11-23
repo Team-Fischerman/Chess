@@ -52,9 +52,6 @@ namespace Checkmate.ChessPieces
             }
             
             
-         
-            
-            
         }
 
         public override void ShowLegalMoves(ChessBoard board, Point location)
