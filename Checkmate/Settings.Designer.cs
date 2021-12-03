@@ -40,7 +40,7 @@ namespace Checkmate
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label1.ForeColor = System.Drawing.Color.SandyBrown;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (255)))), ((int) (((byte) (255)))), ((int) (((byte) (128)))));
             this.label1.Location = new System.Drawing.Point(297, 78);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(186, 55);
@@ -51,20 +51,21 @@ namespace Checkmate
             // 
             this.box_legalMoves.BackColor = System.Drawing.Color.Transparent;
             this.box_legalMoves.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.box_legalMoves.ForeColor = System.Drawing.Color.SandyBrown;
+            this.box_legalMoves.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (255)))), ((int) (((byte) (255)))), ((int) (((byte) (128)))));
             this.box_legalMoves.Location = new System.Drawing.Point(317, 136);
             this.box_legalMoves.Name = "box_legalMoves";
             this.box_legalMoves.Size = new System.Drawing.Size(117, 23);
             this.box_legalMoves.TabIndex = 1;
             this.box_legalMoves.Text = "Legal Moves";
             this.box_legalMoves.UseVisualStyleBackColor = false;
+            this.box_legalMoves.CheckedChanged += new System.EventHandler(this.box_legalMoves_CheckedChanged);
             // 
             // btn_back
             // 
             this.btn_back.BackColor = System.Drawing.Color.Transparent;
             this.btn_back.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_back.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.btn_back.ForeColor = System.Drawing.Color.SandyBrown;
+            this.btn_back.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (255)))), ((int) (((byte) (255)))), ((int) (((byte) (128)))));
             this.btn_back.Location = new System.Drawing.Point(613, 393);
             this.btn_back.Name = "btn_back";
             this.btn_back.Size = new System.Drawing.Size(175, 45);
@@ -77,7 +78,7 @@ namespace Checkmate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Checkmate.Properties.Resources.Cookies_Background;
+            this.BackgroundImage = global::Checkmate.Properties.Resources._1920x1080_black_solid_color_background;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btn_back);
             this.Controls.Add(this.box_legalMoves);

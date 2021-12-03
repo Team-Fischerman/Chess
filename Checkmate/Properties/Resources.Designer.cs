@@ -63,6 +63,16 @@ namespace Checkmate.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1920x1080_black_solid_color_background {
+            get {
+                object obj = ResourceManager.GetObject("_1920x1080_black_solid_color_background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BBishop {
             get {
                 object obj = ResourceManager.GetObject("BBishop", resourceCulture);
@@ -136,6 +146,36 @@ namespace Checkmate.Properties {
         internal static System.Drawing.Bitmap Dogs_Playing_Chess {
             get {
                 object obj = ResourceManager.GetObject("Dogs_Playing_Chess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Star_Wars_Chess_Game {
+            get {
+                object obj = ResourceManager.GetObject("Star_Wars_Chess_Game", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Star_Wars_Homepage {
+            get {
+                object obj = ResourceManager.GetObject("Star_Wars_Homepage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Star_Wars_Settings {
+            get {
+                object obj = ResourceManager.GetObject("Star_Wars_Settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

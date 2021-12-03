@@ -43,8 +43,11 @@ namespace Checkmate
             // exits application on close
             Application.Exit();
         }
-        
-      
 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

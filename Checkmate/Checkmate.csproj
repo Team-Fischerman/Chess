@@ -116,12 +116,16 @@
       <Content Include="Resources\BRook.png" />
       <Content Include="Resources\Cookies_Background.jpg" />
       <Content Include="Resources\Dogs_Playing_Chess.jpg" />
+      <Content Include="Resources\Star_Wars_Chess_Game.jpg" />
+      <Content Include="Resources\Star_Wars_Homepage.png" />
+      <Content Include="Resources\Star_Wars_Settings.jpg" />
       <Content Include="Resources\WBishop.png" />
       <Content Include="Resources\WKing.png" />
       <Content Include="Resources\WKnight.png" />
       <Content Include="Resources\WPawn.png" />
       <Content Include="Resources\WQueen.png" />
       <Content Include="Resources\WRook.png" />
+      <Content Include="Resources\_1920x1080_black_solid_color_background.jpg" />
       <Content Include="Settings1.settings" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

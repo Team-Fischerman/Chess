@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Checkmate
@@ -11,6 +12,10 @@ namespace Checkmate
 
         // pawn variable
         protected bool hasMoved;
+
+
+        protected List<Cell> legalMoves = new List<Cell>();
+        
      
 
         public ChessPiece(PieceColor pieceColor)
@@ -28,10 +33,30 @@ namespace Checkmate
         public virtual void ShowLegalMoves(ChessBoard board, Point location)
         {
             // Resets legal move from previous piece
-            ResetLegalMoves(board);
-            
-            
+            // board.ClearBoard();
+            test(board);
+
         }
+
+
+
+
+        public void test(ChessBoard b)
+        {
+
+
+            for (int i = 0; i < b.Size; i++)
+            {
+                for (int j = 0; j < b.Size; j++)
+                {
+                    b.board[i, j].IsLegal = false;
+                }
+            }
+        }
+        
+        
+        
+        
 
         public void SetPawnMoved(bool moved)
         {
@@ -50,27 +75,6 @@ namespace Checkmate
 
             return true;
         }
-
-
-        /// <summary>
-        /// resets the legal moves from the previous selected piece
-        /// </summary>
-        /// <param name="board"></param>
-        private void ResetLegalMoves(ChessBoard board)
-        {
-            
-            
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    board.board[i, j].IsLegal = false;
-                   
-                }
-            }
-        }
-
-      
         
         public enum PieceColor
         {

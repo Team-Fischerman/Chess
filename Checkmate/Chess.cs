@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
@@ -13,6 +12,11 @@ namespace Checkmate
         // board var
         private ChessBoard board = new ChessBoard();
         private Panel[,] chessBoard = new Panel[8, 8];
+
+        
+        
+        private readonly Color _color1 = Color.DarkGreen;
+
 
         // thread var
         private Thread workerThread;
@@ -64,7 +68,7 @@ namespace Checkmate
 
 
                     // Colors each square 
-                    SettingUpEachSquare(i, j, Color.White, Color.SandyBrown);
+                    SettingUpEachSquare(i, j, Color.White, _color1);
                 }
             }
 
@@ -83,7 +87,7 @@ namespace Checkmate
                 chessBoard[1, i].BackgroundImage = new Pawn(ChessPiece.PieceColor.BLACK).PieceImage;
                 chessBoard[6, i].BackgroundImage = new Pawn(ChessPiece.PieceColor.WHITE).PieceImage;
                 endPoints.Add(new Point(0, i));
-                endPoints.Add(new Point(7, i)); 
+                endPoints.Add(new Point(7, i));
             }
 
             BlackPieces(0);
@@ -154,6 +158,7 @@ namespace Checkmate
                     if (board.board[i, j].IsLegal && !board.board[i, j].IsOccupied)
                     {
                         chessBoard[i, j].BackColor = Color.Red;
+                        // MessageBox.Show("Hello");
                     }
 
                     else if (board.board[i, j].IsLegal && board.board[i, j].IsOccupied)
@@ -175,7 +180,7 @@ namespace Checkmate
                 {
                     if (chessBoard[i, j].BackColor == Color.Red)
                     {
-                        SettingUpEachSquare(i, j, Color.White, Color.SandyBrown);
+                        SettingUpEachSquare(i, j, Color.White, _color1);
                     }
                 }
             }
@@ -203,11 +208,16 @@ namespace Checkmate
                 {
                     ResettingBoardColors();
                     piece.ShowLegalMoves(board, location);
-                    HighlightLegalMove(piece);
+
+                    if (Settings.Highlight)
+                    {
+                        HighlightLegalMove(piece);
+                    }
                 }
                 else
                 {
                     ResettingBoardColors();
+                    board.ClearBoard();
                 }
             }
         }
@@ -218,23 +228,27 @@ namespace Checkmate
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        ///
         private void PieceClick(object sender, EventArgs e)
         {
             Panel clickedPanel = (Panel) sender;
             Point location = (Point) clickedPanel.Tag;
             Cell currentCell = board.board[location.X, location.Y];
 
+
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
 
-
             ChessPiece piece = currentCell.GetChessPiece();
-
             SwapTurn(currentCell, piece, location);
+
+            // TODO Fix taking piece
+            // STATE = Normal, Check, Checkmate
+
 
             #region Start of being able to move piece
 
             bool movePiece = currentPiece == null;
-            if (movePiece || !board.board[location.X, location.Y].IsLegal)
+            if (movePiece || !currentCell.IsLegal)
             {
                 tempPanel = clickedPanel;
                 currentPiece = piece;
@@ -242,18 +256,16 @@ namespace Checkmate
             }
             else
             {
-                // Player is moving chess piece
-                if (board.board[location.X, location.Y].IsLegal)
+                // Player can move if currentCell is legal
+                if (currentCell.IsLegal)
                 {
                     clickedPanel.BackgroundImage = currentPiece.PieceImage;
                     tempPanel.BackgroundImage = null;
 
                     // resetting red squares when chess piece has moved
                     ResettingBoardColors();
-
                     board.SetCell(location.X, location.Y, new Cell(location.X, location.Y, currentPiece));
 
-                    // Pawn can move up one square after initial turn
                     if (currentPiece is Pawn)
                     {
                         currentPiece.SetPawnMoved(true);
@@ -262,11 +274,11 @@ namespace Checkmate
                         PawnIntoQueen(location);
                     }
 
-                    board.SetCell(clickedCell.RowNum, clickedCell.ColNum, new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
-
-                    // swapping turns
-                    whiteTurn = !whiteTurn;
+                    board.SetCell(clickedCell.RowNum, clickedCell.ColNum,
+                        new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
+                    SetTurnText();
                 }
+
 
                 currentPiece = null;
             }
@@ -287,6 +299,12 @@ namespace Checkmate
             }
         }
 
+
+        private bool TurnIs(bool turn)
+        {
+            return turn;
+        }
+
         private void SettingPawnToQueen(Point location, ChessPiece.PieceColor pieceColor)
         {
             chessBoard[location.X, location.Y].BackgroundImage = new Queen(pieceColor).PieceImage;
@@ -294,9 +312,11 @@ namespace Checkmate
         }
 
 
-        private bool PlayerHasMoved(Panel clickedPanel)
+        private void SetTurnText()
         {
-            return clickedPanel.BackColor == Color.Red;
+            // swapping turns
+            whiteTurn = !whiteTurn;
+            label_turn.Text = whiteTurn ? @"White Turn" : @"Black Turn";
         }
 
 

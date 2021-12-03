@@ -24,12 +24,17 @@ namespace Checkmate
 
         public void ClearBoard()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    board[i, j].IsLegal = false;
-                   
+
+
+                    if (board[i, j].IsLegal)
+                    {
+                        board[i, j].IsLegal = false;
+                    }
+                 
                 }
             }
         }
