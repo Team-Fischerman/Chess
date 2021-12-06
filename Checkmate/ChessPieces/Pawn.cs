@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
+
 
 
 namespace Checkmate.ChessPieces
@@ -59,7 +59,7 @@ namespace Checkmate.ChessPieces
                 // Pawn has the option to the move up two cells
                 if (!hasMoved)
                 {
-                    if (!board.board[location.X - 1, location.Y - 1].IsOccupied)
+                    if (!board.board[location.X - 1, location.Y].IsOccupied)
                     {
                         if (isSafe(location.X - 1, location.Y))
                             board.board[location.X - 1, location.Y].IsLegal = true;

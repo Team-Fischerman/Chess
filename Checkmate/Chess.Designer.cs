@@ -37,7 +37,7 @@ namespace Checkmate
             this.btn_resign = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
             this.label_turn = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label_debug = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -111,18 +111,19 @@ namespace Checkmate
             this.label_turn.Text = "White Turn";
             this.label_turn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // label_debug
             // 
-            this.label2.BackColor = System.Drawing.Color.Silver;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label2.Location = new System.Drawing.Point(474, 386);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(158, 58);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "DEBUG LOG";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_debug.BackColor = System.Drawing.Color.Silver;
+            this.label_debug.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_debug.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label_debug.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label_debug.Location = new System.Drawing.Point(474, 386);
+            this.label_debug.Name = "label_debug";
+            this.label_debug.Size = new System.Drawing.Size(158, 58);
+            this.label_debug.TabIndex = 6;
+            this.label_debug.Text = "DEBUG LOG";
+            this.label_debug.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+          
             // 
             // Chess
             // 
@@ -132,7 +133,7 @@ namespace Checkmate
             this.BackColor = System.Drawing.Color.SandyBrown;
             this.BackgroundImage = global::Checkmate.Properties.Resources._1920x1080_black_solid_color_background;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label_debug);
             this.Controls.Add(this.label_turn);
             this.Controls.Add(this.btn_back);
             this.Controls.Add(this.btn_resign);
@@ -145,13 +146,17 @@ namespace Checkmate
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.Label label_debug;
+
+        private System.Windows.Forms.Label debub_label;
+
         private System.Windows.Forms.Label label_turn;
 
         private System.Windows.Forms.Label label_winner;
         private System.Windows.Forms.Button btn_resign;
         private System.Windows.Forms.Button btn_back;
 
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label debug;
 
         private System.Windows.Forms.Label label1;
 

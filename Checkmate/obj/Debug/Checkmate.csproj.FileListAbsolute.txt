@@ -10,3 +10,4 @@ C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.pdb
 C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.Chess.resources
 C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.HomePage.resources
 C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.Settings.resources
+C:\Users\Harvey Munoz\RiderProjects\Chess\Checkmate\obj\Debug\Checkmate.Tutorial.resources

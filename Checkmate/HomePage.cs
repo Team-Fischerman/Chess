@@ -47,7 +47,16 @@ namespace Checkmate
 
         private void button1_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            Tutorial tutorial = new Tutorial();
+
+            // hides homepage
+            this.Hide();
+
+            // shows chess game
+            tutorial.ShowDialog();
+
+            // closes homepage
+            this.Close();
         }
     }
 }

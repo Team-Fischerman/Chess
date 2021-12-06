@@ -7,12 +7,11 @@ using Checkmate.ChessPieces;
 
 namespace Checkmate
 {
-    public partial class Chess : Form
+    public partial class Tutorial : Form
     {
-        // board var
-        private ChessBoard board = new ChessBoard(true);
+        private ChessBoard board = new ChessBoard(false);
         private Panel[,] chessBoard = new Panel[8, 8];
-        
+
         private readonly Color _color1 = Color.DarkGreen;
 
 
@@ -28,18 +27,13 @@ namespace Checkmate
         private bool canMove;
 
 
-        public Chess()
+        public Tutorial()
         {
             InitializeComponent();
+
             CreateVisualBoard();
 
             whiteTurn = true;
-
-
-            // if (Settings.Test)
-            // {
-            //     
-            // }
         }
 
 
@@ -89,47 +83,27 @@ namespace Checkmate
             for (int i = 0; i < board.Size; i++)
             {
                 // Setting up black and white piece pawn images on the board
-                chessBoard[1, i].BackgroundImage = new Pawn(ChessPiece.PieceColor.BLACK).PieceImage;
-                chessBoard[6, i].BackgroundImage = new Pawn(ChessPiece.PieceColor.WHITE).PieceImage;
                 endPoints.Add(new Point(0, i));
                 endPoints.Add(new Point(7, i));
             }
 
-            BlackPieces(0);
-            WhitePieces(7);
+
+            chessBoard[0, 3].BackgroundImage = board.board[0, 3].GetChessPiece().PieceImage;
+            chessBoard[0, 4].BackgroundImage = board.board[0, 4].GetChessPiece().PieceImage;
+            chessBoard[0, 5].BackgroundImage = board.board[0, 5].GetChessPiece().PieceImage;
+            chessBoard[0, 6].BackgroundImage = board.board[0, 6].GetChessPiece().PieceImage;
+            chessBoard[0, 7].BackgroundImage = board.board[0, 7].GetChessPiece().PieceImage;
+            chessBoard[1, 5].BackgroundImage = board.board[1, 5].GetChessPiece().PieceImage;
+
+
+            chessBoard[7, 3].BackgroundImage = board.board[7, 3].GetChessPiece().PieceImage;
+            chessBoard[7, 4].BackgroundImage = board.board[7, 4].GetChessPiece().PieceImage;
+            chessBoard[7, 5].BackgroundImage = board.board[7, 5].GetChessPiece().PieceImage;
+            chessBoard[7, 6].BackgroundImage = board.board[7, 6].GetChessPiece().PieceImage;
+            chessBoard[7, 7].BackgroundImage = board.board[7, 7].GetChessPiece().PieceImage;
+            chessBoard[6, 5].BackgroundImage = board.board[6, 5].GetChessPiece().PieceImage;
         }
 
-
-        /// <summary>
-        /// Setting the black chess pieces on the board
-        /// </summary>
-        void BlackPieces(int row)
-        {
-            chessBoard[row, 0].BackgroundImage = new Rook(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 1].BackgroundImage = new Knight(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 2].BackgroundImage = new Bishop(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 3].BackgroundImage = new Queen(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 4].BackgroundImage = new King(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 5].BackgroundImage = new Bishop(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 6].BackgroundImage = new Knight(ChessPiece.PieceColor.BLACK).PieceImage;
-            chessBoard[row, 7].BackgroundImage = new Rook(ChessPiece.PieceColor.BLACK).PieceImage;
-        }
-
-
-        /// <summary>
-        /// Setting the white chess pieces on the board
-        /// </summary>
-        void WhitePieces(int row)
-        {
-            chessBoard[row, 0].BackgroundImage = new Rook(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 1].BackgroundImage = new Knight(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 2].BackgroundImage = new Bishop(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 3].BackgroundImage = new Queen(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 4].BackgroundImage = new King(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 5].BackgroundImage = new Bishop(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 6].BackgroundImage = new Knight(ChessPiece.PieceColor.WHITE).PieceImage;
-            chessBoard[row, 7].BackgroundImage = new Rook(ChessPiece.PieceColor.WHITE).PieceImage;
-        }
 
         /// <summary>
         /// When a cell is even or odd then set the color to white, otherwise set it to green
@@ -206,56 +180,46 @@ namespace Checkmate
 
         private void ShowMoves(Cell currentCell, ChessPiece piece, ChessPiece.PieceColor pieceColor, Point location)
         {
-            
-            
-            
             if (currentCell.IsOccupied)
             {
-                
                 if (piece.GetPieceColor() == pieceColor)
                 {
                     canMove = true;
                     ResettingBoardColors();
                     piece.ShowLegalMoves(board, location);
-                    
+
                     // enabling legal moves 
                     if (Settings.Highlight)
                     {
                         HighlightLegalMove(piece);
                     }
-                    
                 }
                 else
                 {
                     ResettingBoardColors();
 
 
-                  //  canTake = currentCell.IsLegal;
-
-                  if (currentCell.IsLegal)
-                  {
-                      canMove = true;
-                  }
-                  else
-                  {
-                      canMove = false;
-                  }
+                    // For taking pieces
+                    if (currentCell.IsLegal)
+                    {
+                        canMove = true;
+                    }
+                    else
+                    {
+                        canMove = false;
+                    }
                 }
-                
-                
             }
             else
             {
-                
                 // when player deselects piece and selects and unoccupied square that isn't legal then reset board colors
                 if (!currentCell.IsLegal)
                 {
                     ResettingBoardColors();
                 }
-                
             }
         }
-        
+
         /// <summary>
         /// Handles all piece movement
         /// </summary>
@@ -269,12 +233,11 @@ namespace Checkmate
 
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
 
-          
+
             ChessPiece piece = currentCell.GetChessPiece();
             SwapTurn(currentCell, piece, location);
-            
-            
-            
+
+
             // STATE = Normal, Check, Checkmate
 
             #region Start of being able to move piece
@@ -310,13 +273,10 @@ namespace Checkmate
                         new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
 
                     SetTurnText();
-                    
-                    
-                    // board.ClearBoard();
 
 
                     canMove = false;
-
+                    
                 }
 
                 currentPiece = null;
@@ -325,7 +285,7 @@ namespace Checkmate
             #endregion END OF MOVING PIECE
         }
 
-        
+
         /// <summary>
         /// Changes pawn into queen when ever respective piece reaches other side of the board
         /// </summary>
@@ -396,6 +356,21 @@ namespace Checkmate
             // backgroundMusic.Stop();
 
             // creates new homepage instance
+            HomePage home = new HomePage();
+
+            // hides chess game
+            Hide();
+
+            // shows homepage
+            home.ShowDialog();
+
+            // closes chess game
+            Close();
+        }
+
+
+        private void btn_back_Click_1(object sender, EventArgs e)
+        {
             HomePage home = new HomePage();
 
             // hides chess game

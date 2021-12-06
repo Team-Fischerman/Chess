@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Checkmate.ChessPieces;
 
 namespace Checkmate
@@ -10,13 +11,21 @@ namespace Checkmate
         
         
 
-        public ChessBoard()
+        public ChessBoard(bool normal)
         {
             
             Size = 8;
             board = new Cell[Size, Size];
+
+            if (normal)
+            {
+                InitializeBoard();
+            }
+            else
+            {
+                TutorialInitializeBoard();
+            }
             
-            InitializeBoard();
             
             
         }
@@ -28,8 +37,7 @@ namespace Checkmate
             {
                 for (int j = 0; j < Size; j++)
                 {
-
-
+                    
                     if (board[i, j].IsLegal)
                     {
                         board[i, j].IsLegal = false;
@@ -91,6 +99,43 @@ namespace Checkmate
             
         
         }
+
+
+        private void TutorialInitializeBoard()
+        {
+
+
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    board[i, j] = new Cell(i, j, null);
+                }
+            }
+
+
+            board[0, 3] = new Cell(0,3,new Queen(ChessPiece.PieceColor.BLACK));
+            board[0, 4] = new Cell(0,4,new King(ChessPiece.PieceColor.BLACK));
+            board[0, 5] = new Cell(0,5,new Bishop(ChessPiece.PieceColor.BLACK));
+            board[0, 6] = new Cell(0,6,new Knight(ChessPiece.PieceColor.BLACK));
+            board[0, 7] = new Cell(0,7,new Rook(ChessPiece.PieceColor.BLACK));
+            board[1, 5] = new Cell(1,5,new Pawn(ChessPiece.PieceColor.BLACK));
+
+
+
+            board[7, 3] = new Cell(7,3,new Queen(ChessPiece.PieceColor.WHITE));
+            board[7, 4] = new Cell(7,4,new King(ChessPiece.PieceColor.WHITE));
+            board[7, 5] = new Cell(7,5,new Bishop(ChessPiece.PieceColor.WHITE));
+            board[7, 6] = new Cell(7,6,new Knight(ChessPiece.PieceColor.WHITE));
+            board[7, 7] = new Cell(7,7,new Rook(ChessPiece.PieceColor.WHITE));
+            board[6, 5] = new Cell(6,5,new Pawn(ChessPiece.PieceColor.WHITE));
+
+
+            
+            
+
+        }
+        
         
     }
 }
