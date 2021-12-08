@@ -1,5 +1,7 @@
-﻿using System.Drawing;
-
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
 
 
 namespace Checkmate.ChessPieces
@@ -48,6 +50,8 @@ namespace Checkmate.ChessPieces
             }
         }
 
+
+       
         public override void ShowLegalMoves(ChessBoard board, Point location)
         {
             base.ShowLegalMoves(board, location);
@@ -63,15 +67,15 @@ namespace Checkmate.ChessPieces
                     {
                         if (isSafe(location.X - 1, location.Y))
                             board.board[location.X - 1, location.Y].IsLegal = true;
+                    
+                        if (!board.board[location.X - 2, location.Y].IsOccupied)
+                        {
+                            if (isSafe(location.X - 2, location.Y))
+                                board.board[location.X - 2, location.Y].IsLegal = true;
+                        }
                     }
-
-
-                    if (!board.board[location.X - 2, location.Y].IsOccupied)
-                    {
-                        if (isSafe(location.X - 2, location.Y))
-                            board.board[location.X - 2, location.Y].IsLegal = true;
-                    }
-
+                    
+                  
 
                     DiagonalAttackWhite(board, location);
                 }
@@ -83,7 +87,6 @@ namespace Checkmate.ChessPieces
                         if (isSafe(location.X - 1, location.Y))
                             board.board[location.X - 1, location.Y].IsLegal = true;
                     }
-
 
                     DiagonalAttackWhite(board, location);
                 }
@@ -98,15 +101,16 @@ namespace Checkmate.ChessPieces
                     {
                         if (isSafe(location.X + 1, location.Y))
                             board.board[location.X + 1, location.Y].IsLegal = true;
+                    
+                    
+                        if (!board.board[location.X + 2, location.Y].IsOccupied)
+                        {
+                            if (isSafe(location.X + 2, location.Y))
+                                board.board[location.X + 2, location.Y].IsLegal = true;
+                        }
                     }
-
-
-                    if (!board.board[location.X + 1, location.Y].IsOccupied)
-                    {
-                        if (isSafe(location.X + 2, location.Y))
-                            board.board[location.X + 2, location.Y].IsLegal = true;
-                    }
-
+                    
+                    
 
                     DiagonalAttackBlack(board, location);
                 }

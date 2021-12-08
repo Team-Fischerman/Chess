@@ -5,7 +5,7 @@
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{6DB62D08-891A-4247-8B76-D23C4FA964FE}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <RootNamespace>Checkmate</RootNamespace>
         <AssemblyName>Checkmate</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>

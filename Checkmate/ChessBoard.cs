@@ -46,6 +46,34 @@ namespace Checkmate
                 }
             }
         }
+
+        public bool KingIsInCheck()
+        {
+            // now check if king is legal moves 
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    Cell cell = board[i, j];
+                    if (cell.IsLegal)
+                    {
+                        if (cell.IsOccupied)
+                        {
+                            if (cell.GetChessPiece() is King)
+                            {
+                                Console.WriteLine("Check!");
+                                Console.WriteLine("King Location " + cell.PrintLocation());
+
+                                return true;
+                            }
+                           
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
         
         
         public void SetCell(int x, int y,Cell cell)

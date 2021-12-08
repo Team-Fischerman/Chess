@@ -1,4 +1,6 @@
-﻿namespace Checkmate
+﻿using System;
+
+namespace Checkmate
 {
     public class Cell
     {
@@ -31,6 +33,13 @@
         public ChessPiece GetChessPiece()
         {
             return chessPiece;
+        }
+
+        public String PrintLocation()
+        {
+
+            return "(" + RowNum + "," + ColNum + ")";
+
         }
 
     }

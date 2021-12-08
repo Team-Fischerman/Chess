@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,10 +10,20 @@ namespace Checkmate
 {
     public partial class Chess : Form
     {
+        public enum State
+        {
+            Normal,
+            Check,
+            Checkmate
+        }
+
+        public State kingState;
+
+
         // board var
         private ChessBoard board = new ChessBoard(true);
         private Panel[,] chessBoard = new Panel[8, 8];
-        
+
         private readonly Color _color1 = Color.DarkGreen;
 
 
@@ -33,13 +44,11 @@ namespace Checkmate
             InitializeComponent();
             CreateVisualBoard();
 
+            label_debug.Text = "" + State.Normal;
+
+            Console.WriteLine(1 + -1);
+            
             whiteTurn = true;
-
-
-            // if (Settings.Test)
-            // {
-            //     
-            // }
         }
 
 
@@ -176,6 +185,7 @@ namespace Checkmate
             }
         }
 
+        // Reset visual board (colors)
         private void ResettingBoardColors()
         {
             for (int i = 0; i < board.Size; i++)
@@ -193,9 +203,6 @@ namespace Checkmate
         /// <summary>
         /// Turn based system. 
         /// </summary>
-        /// <param name="currentCell"></param>
-        /// <param name="piece"></param>
-        /// <param name="location"></param>
         private void SwapTurn(Cell currentCell, ChessPiece piece, Point location)
         {
             // Show legal moves for respective turn
@@ -206,56 +213,58 @@ namespace Checkmate
 
         private void ShowMoves(Cell currentCell, ChessPiece piece, ChessPiece.PieceColor pieceColor, Point location)
         {
-            
-            
-            
             if (currentCell.IsOccupied)
             {
-                
                 if (piece.GetPieceColor() == pieceColor)
                 {
                     canMove = true;
+
                     ResettingBoardColors();
+                        
                     piece.ShowLegalMoves(board, location);
+                    // switch (kingState)
+                    // {
+                    //     case State.Normal:
+                    //         ResettingBoardColors();
+                    //         piece.ShowLegalMoves(board, location);
+                    //         break;
+                    //     case State.Check:
+                    //     {
+                    //         if (piece is King)
+                    //         {
+                    //             board.ClearBoard();
+                    //             ResettingBoardColors();
+                    //             piece.ShowLegalMoves(board, location);
+                    //         }
+                    //
+                    //         break;
+                    //     }
+                    // }
                     
-                    // enabling legal moves 
+
+
+                        // enabling legal moves 
                     if (Settings.Highlight)
                     {
                         HighlightLegalMove(piece);
                     }
-                    
                 }
                 else
                 {
                     ResettingBoardColors();
-
-
-                  //  canTake = currentCell.IsLegal;
-
-                  if (currentCell.IsLegal)
-                  {
-                      canMove = true;
-                  }
-                  else
-                  {
-                      canMove = false;
-                  }
+                    canMove = currentCell.IsLegal;
                 }
-                
-                
             }
             else
             {
-                
                 // when player deselects piece and selects and unoccupied square that isn't legal then reset board colors
                 if (!currentCell.IsLegal)
                 {
                     ResettingBoardColors();
                 }
-                
             }
         }
-        
+
         /// <summary>
         /// Handles all piece movement
         /// </summary>
@@ -268,13 +277,16 @@ namespace Checkmate
             Cell currentCell = board.board[location.X, location.Y];
 
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
-
           
+
             ChessPiece piece = currentCell.GetChessPiece();
+
+           
             SwapTurn(currentCell, piece, location);
             
-            
-            
+     
+
+
             // STATE = Normal, Check, Checkmate
 
             #region Start of being able to move piece
@@ -310,12 +322,39 @@ namespace Checkmate
                         new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
 
                     SetTurnText();
-                    
-                    
-                    // board.ClearBoard();
-
 
                     canMove = false;
+
+
+                    // Check for check
+                    // change state to check
+
+
+                    // get the current piece legal moves
+                    currentPiece.ShowLegalMoves(board, location);
+                   // HighlightLegalMove(currentPiece);
+                   
+                    if (board.KingIsInCheck())
+                    { 
+                        kingState = State.Check;
+                        label_debug.Text = "" + kingState;
+
+                        
+                    }
+
+
+
+                    // if (kingState == State.Check)
+                    // {
+                    //     // only king can move for now
+                    //     
+                    //     if (currentPiece is King)
+                    //     {
+                    //         currentPiece.ShowLegalMoves(board,location);
+                    //     }
+                    //     
+                    // }
+                    
 
                 }
 
@@ -325,7 +364,7 @@ namespace Checkmate
             #endregion END OF MOVING PIECE
         }
 
-        
+
         /// <summary>
         /// Changes pawn into queen when ever respective piece reaches other side of the board
         /// </summary>

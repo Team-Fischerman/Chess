@@ -7,12 +7,15 @@ namespace Checkmate
     {
         public static bool Highlight = true;
         // public static bool Test = true;
+
+        private ChessBoard chessBoard;
+        private bool legalMove;
         
         public Settings()
         {
             InitializeComponent();
             box_legalMoves.Checked = Highlight;
-            // checkBox1.Checked = Test;
+
         }
 
         private void btn_back_Click_1(object sender, EventArgs e)
