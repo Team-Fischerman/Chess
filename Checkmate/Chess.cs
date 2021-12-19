@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,7 +16,7 @@ namespace Checkmate
             Checkmate
         }
 
-        public State kingState;
+        public static State kingState;
 
 
         // board var
@@ -30,8 +29,11 @@ namespace Checkmate
         // thread var
         private Thread workerThread;
 
+
         // logic var
         private List<Point> endPoints = new List<Point>();
+
+
         private ChessPiece currentPiece;
         private Cell clickedCell;
         private Panel tempPanel;
@@ -41,14 +43,15 @@ namespace Checkmate
 
         public Chess()
         {
+            
+            Console.WriteLine("Starting a chess game.");
             InitializeComponent();
             CreateVisualBoard();
 
             label_debug.Text = "" + State.Normal;
-
-            Console.WriteLine(1 + -1);
-            
             whiteTurn = true;
+            
+            
         }
 
 
@@ -162,7 +165,7 @@ namespace Checkmate
         /// <summary>
         /// Highlights legal moves red for a chess piece
         /// </summary>
-        private void HighlightLegalMove(ChessPiece piece)
+        public void HighlightLegalMove(ChessPiece piece)
         {
             for (int i = 0; i < board.Size; i++)
             {
@@ -219,31 +222,11 @@ namespace Checkmate
                 {
                     canMove = true;
 
+
                     ResettingBoardColors();
-                        
-                    piece.ShowLegalMoves(board, location);
-                    // switch (kingState)
-                    // {
-                    //     case State.Normal:
-                    //         ResettingBoardColors();
-                    //         piece.ShowLegalMoves(board, location);
-                    //         break;
-                    //     case State.Check:
-                    //     {
-                    //         if (piece is King)
-                    //         {
-                    //             board.ClearBoard();
-                    //             ResettingBoardColors();
-                    //             piece.ShowLegalMoves(board, location);
-                    //         }
-                    //
-                    //         break;
-                    //     }
-                    // }
-                    
+                    piece.EnablingLegalMoves(board, location);
 
-
-                        // enabling legal moves 
+                    // enabling legal moves 
                     if (Settings.Highlight)
                     {
                         HighlightLegalMove(piece);
@@ -270,6 +253,7 @@ namespace Checkmate
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        ///
         private void PieceClick(object sender, EventArgs e)
         {
             Panel clickedPanel = (Panel) sender;
@@ -277,15 +261,9 @@ namespace Checkmate
             Cell currentCell = board.board[location.X, location.Y];
 
             label1.Text = @"You clicked a square at location " + location.X + "," + location.Y;
-          
 
             ChessPiece piece = currentCell.GetChessPiece();
-
-           
             SwapTurn(currentCell, piece, location);
-            
-     
-
 
             // STATE = Normal, Check, Checkmate
 
@@ -313,53 +291,74 @@ namespace Checkmate
                     if (currentPiece is Pawn)
                     {
                         currentPiece.SetPawnMoved(true);
-
-                        // change pawn into queen 
                         PawnIntoQueen(location);
                     }
+
+                    // if (currentPiece is King)
+                    // {
+                    //     currentPiece.SetPawnMoved(true);
+                    //     Castle(location);
+                    // }
+                    //
+                    // if (currentPiece is Rook)
+                    // {
+                    //     currentPiece.SetPawnMoved(true);
+                    // }
+
 
                     board.SetCell(clickedCell.RowNum, clickedCell.ColNum,
                         new Cell(clickedCell.RowNum, clickedCell.ColNum, null));
 
                     SetTurnText();
-
                     canMove = false;
 
 
                     // Check for check
                     // change state to check
 
-
                     // get the current piece legal moves
-                    currentPiece.ShowLegalMoves(board, location);
-                   // HighlightLegalMove(currentPiece);
-                   
-                    if (board.KingIsInCheck())
-                    { 
+                    currentPiece.EnablingLegalMoves(board, location);
+                    if (board.KingIsInCheck(currentPiece, currentPiece.GetPieceColor()))
+                    {
                         kingState = State.Check;
-                        label_debug.Text = "" + kingState;
-
-                        
+                        Console.WriteLine(@"Check!");
+                    }
+                    else
+                    {
+                        kingState = State.Normal;
                     }
 
 
+                    // When a piece has moved and it's check
+                    if (kingState == State.Check || kingState == State.Normal)
+                    {
+                        // check to see if the king is in legal move checker of opposing color pieces
+                        // 1. loop through the board
+                        // 2. check opposing pieces and enable their moves
+                        // 3. add all opposing pieces legal moves to a list
+                        // 4. compare legal moves to kings moves
+                        // 5. if they dont match then enable the ones that do not match
 
-                    // if (kingState == State.Check)
-                    // {
-                    //     // only king can move for now
-                    //     
-                    //     if (currentPiece is King)
-                    //     {
-                    //         currentPiece.ShowLegalMoves(board,location);
-                    //     }
-                    //     
-                    // }
-                    
+                        // board.AttackingMoves();
+                        board.KingsLegalMove(this, currentPiece.GetPieceColor());
+                    }
 
+
+                    label_debug.Text = "" + kingState;
+
+                    // board.PrintList(board.GetDefendingList());
+                    // board.PrintList(board.GetAttackingList()); 
+                    // getting check when a piece attacks the king
+                    // after king has moved from check then state = normal
                 }
+
 
                 currentPiece = null;
             }
+
+
+            // board.PrintList(board.GetDefendingList());
+            // Testing legal move list
 
             #endregion END OF MOVING PIECE
         }
@@ -388,6 +387,39 @@ namespace Checkmate
             board.board[location.X, location.Y] = new Cell(location.X, location.Y, new Queen(pieceColor));
         }
 
+        private void Castle(Point location)
+        {
+            Console.WriteLine("location: " + location);
+            if (location.X == 7 && location.Y == 2)
+            {
+                chessBoard[7, 3].BackgroundImage = new Rook(ChessPiece.PieceColor.WHITE).PieceImage;
+                board.board[7, 3] = new Cell(7, 3, new Rook(ChessPiece.PieceColor.WHITE));
+                chessBoard[7, 0].BackgroundImage = null;
+                board.board[7, 0] = new Cell(7, 0, null);
+            }
+            else if (location.X == 7 && location.Y == 6)
+            {
+                chessBoard[7, 5].BackgroundImage = new Rook(ChessPiece.PieceColor.WHITE).PieceImage;
+                board.board[7, 5] = new Cell(7, 5, new Rook(ChessPiece.PieceColor.WHITE));
+                chessBoard[7, 7].BackgroundImage = null;
+                board.board[7, 7] = new Cell(7, 7, null);
+            }
+            else if (location.X == 0 && location.Y == 2)
+            {
+                chessBoard[0, 3].BackgroundImage = new Rook(ChessPiece.PieceColor.BLACK).PieceImage;
+                board.board[0, 3] = new Cell(0, 3, new Rook(ChessPiece.PieceColor.BLACK));
+                chessBoard[0, 0].BackgroundImage = null;
+                board.board[0, 0] = new Cell(0, 0, null);
+            }
+            else if (location.X == 0 && location.Y == 6)
+            {
+                chessBoard[0, 5].BackgroundImage = new Rook(ChessPiece.PieceColor.BLACK).PieceImage;
+                board.board[0, 5] = new Cell(7, 3, new Rook(ChessPiece.PieceColor.BLACK));
+                chessBoard[0, 7].BackgroundImage = null;
+                board.board[0, 7] = new Cell(7, 0, null);
+            }
+        }
+
 
         private void SetTurnText()
         {
@@ -399,6 +431,8 @@ namespace Checkmate
 
         private void btn_back_Click(object sender, EventArgs e)
         {
+            
+            Console.WriteLine("Back to homepage.");
             // creates new homepage instance
             HomePage home = new HomePage();
 

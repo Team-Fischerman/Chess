@@ -186,7 +186,7 @@ namespace Checkmate
                 {
                     canMove = true;
                     ResettingBoardColors();
-                    piece.ShowLegalMoves(board, location);
+                    piece.EnablingLegalMoves(board, location);
 
                     // enabling legal moves 
                     if (Settings.Highlight)

@@ -25,6 +25,13 @@ namespace Checkmate
             
 
         }
+
+
+        public Cell(int x, int y)
+        {
+            RowNum = x;
+            ColNum = y;
+        }
         
         
         public bool IsOccupied {get; set;}

@@ -147,17 +147,13 @@ namespace Checkmate
         }
 
         private System.Windows.Forms.Label label_debug;
-
-        private System.Windows.Forms.Label debub_label;
-
         private System.Windows.Forms.Label label_turn;
-
         private System.Windows.Forms.Label label_winner;
+        
         private System.Windows.Forms.Button btn_resign;
         private System.Windows.Forms.Button btn_back;
 
         private System.Windows.Forms.Label debug;
-
         private System.Windows.Forms.Label label1;
 
         private System.Windows.Forms.Panel panel1;

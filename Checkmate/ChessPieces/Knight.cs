@@ -9,44 +9,74 @@ namespace Checkmate.ChessPieces
             PieceImage = pieceColor == PieceColor.BLACK ? Properties.Resources.BKnight : Properties.Resources.WKnight;
         }
 
-        public override void ShowLegalMoves(ChessBoard board, Point location)
+
+        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
         {
-            
-            
-            base.ShowLegalMoves(board,location);
-            
-            if(isSafe(location.X + 2, location.Y + 1)) {
+            if (isSafe(location.X + 2, location.Y + 1))
+            {
                 board.board[location.X + 2, location.Y + 1].IsLegal = true;
             }
 
-            if(isSafe(location.X + 2, location.Y - 1)) {
+            if (isSafe(location.X + 2, location.Y - 1))
+            {
                 board.board[location.X + 2, location.Y - 1].IsLegal = true;
             }
 
-            if(isSafe(location.X - 2, location.Y + 1)) {
+            if (isSafe(location.X - 2, location.Y + 1))
+            {
                 board.board[location.X - 2, location.Y + 1].IsLegal = true;
             }
 
-            if(isSafe(location.X - 2, location.Y - 1)) {
+            if (isSafe(location.X - 2, location.Y - 1))
+            {
                 board.board[location.X - 2, location.Y - 1].IsLegal = true;
             }
 
-            if(isSafe(location.X + 1, location.Y + 2)) {
+            if (isSafe(location.X + 1, location.Y + 2))
+            {
                 board.board[location.X + 1, location.Y + 2].IsLegal = true;
             }
 
-            if(isSafe(location.X + 1, location.Y - 2)) {
+            if (isSafe(location.X + 1, location.Y - 2))
+            {
                 board.board[location.X + 1, location.Y - 2].IsLegal = true;
             }
 
-            if(isSafe(location.X - 1, location.Y + 2)) {
+            if (isSafe(location.X - 1, location.Y + 2))
+            {
                 board.board[location.X - 1, location.Y + 2].IsLegal = true;
             }
 
-            if(isSafe(location.X - 1, location.Y - 2)) {
+            if (isSafe(location.X - 1, location.Y - 2))
+            {
                 board.board[location.X - 1, location.Y - 2].IsLegal = true;
             }
+        }
 
+
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
+        {
+            
+            ShowCheckLegalMoves(board, location);
+            // switch (Chess.kingState)
+            // {
+            //     case Chess.State.Normal:
+            //         ShowCheckLegalMoves(board, location);
+            //         break;
+            //     case Chess.State.Check:
+            //         AddPotentialMoves(board, location);
+            //         EnableProtectedMoves(board,protectingMoves,board.GetAttackingList());
+            //         break;
+            // }
+        }
+
+
+        protected override void AddPotentialMoves(ChessBoard board, Point location)
+        {
+            base.AddPotentialMoves(board, location);
+            ShowCheckLegalMoves(board, location);
+            LegalMove(board, protectingMoves);
+            board.ClearBoard();
         }
     }
 }

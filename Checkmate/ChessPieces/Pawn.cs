@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
 
 
 namespace Checkmate.ChessPieces
@@ -51,11 +48,17 @@ namespace Checkmate.ChessPieces
         }
 
 
-       
-        public override void ShowLegalMoves(ChessBoard board, Point location)
+        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
         {
-            base.ShowLegalMoves(board, location);
+            throw new System.NotImplementedException();
+        }
 
+
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
+        {
+            // base.ShowLegalMoves(board, location);
+    
+         
 
             // Legal moves for white pawn
             if (pieceColor == PieceColor.WHITE)

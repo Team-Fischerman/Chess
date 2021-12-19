@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 
 namespace Checkmate.ChessPieces
 {
@@ -9,11 +10,9 @@ namespace Checkmate.ChessPieces
             PieceImage = pieceColor == PieceColor.BLACK ? Properties.Resources.BQueen : Properties.Resources.WQueen;
         }
 
-        public override void ShowLegalMoves(ChessBoard board, Point location)
+
+        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
         {
-            
-            base.ShowLegalMoves(board,location);
-            
             for (int i = 1; i < board.Size; i++)
             {
                 if (isSafe(location.X - i, location.Y))
@@ -23,44 +22,36 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
-            
-            
+
+
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X + i, location.Y))
                 {
                     board.board[location.X + i, location.Y].IsLegal = true;
                     if (board.board[location.X + i, location.Y].IsOccupied)
                     {
-                        
                         break;
-                        
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X, location.Y + i))
                 {
-                    board.board[location.X, location.Y +i].IsLegal = true;
+                    board.board[location.X, location.Y + i].IsLegal = true;
                     if (board.board[location.X, location.Y + i].IsOccupied)
                     {
                         break;
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X, location.Y - i))
                 {
                     board.board[location.X, location.Y - i].IsLegal = true;
@@ -68,13 +59,11 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X - i, location.Y - i))
                 {
                     board.board[location.X - i, location.Y - i].IsLegal = true;
@@ -82,13 +71,11 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X + i, location.Y + i))
                 {
                     board.board[location.X + i, location.Y + i].IsLegal = true;
@@ -96,13 +83,11 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X + i, location.Y - i))
                 {
                     board.board[location.X + i, location.Y - i].IsLegal = true;
@@ -110,13 +95,11 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
 
             for (int i = 1; i < board.Size; i++)
             {
-
                 if (isSafe(location.X - i, location.Y + i))
                 {
                     board.board[location.X - i, location.Y + i].IsLegal = true;
@@ -124,12 +107,34 @@ namespace Checkmate.ChessPieces
                     {
                         break;
                     }
-
                 }
             }
         }
-           
 
-            
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
+        {
+            ShowCheckLegalMoves(board, location);
+            // switch (Chess.kingState)
+            // {
+            //     case Chess.State.Normal:
+            //         ShowCheckLegalMoves(board,location);
+            //         break;
+            //     case Chess.State.Check:
+            //         AddPotentialMoves(board,location);
+            //         EnableProtectedMoves(board,protectingMoves,board.GetAttackingList());
+            //         break;
+            //     
+            // }
+        }
+
+
+        // NOT USED
+        protected override void AddPotentialMoves(ChessBoard board, Point location)
+        {
+            base.AddPotentialMoves(board, location);
+            ShowCheckLegalMoves(board, location);
+            LegalMove(board, protectingMoves);
+            board.ClearBoard();
         }
     }
+}

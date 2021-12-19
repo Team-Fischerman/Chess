@@ -9,10 +9,15 @@ namespace Checkmate.ChessPieces
             PieceImage = pieceColor == PieceColor.BLACK ? Properties.Resources.BRook : Properties.Resources.WRook;
         }
 
-        public override void ShowLegalMoves(ChessBoard board, Point location)
-        {
-            base.ShowLegalMoves(board, location);
 
+        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
+        {
+         
             for (int i = 1; i < board.Size; i++)
             {
                 if (isSafe(location.X - i, location.Y))
