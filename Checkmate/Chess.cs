@@ -39,6 +39,7 @@ namespace Checkmate
         private Panel tempPanel;
         private bool whiteTurn;
         private bool canMove;
+        private int pieceCounter;
 
 
         public Chess()
@@ -340,9 +341,52 @@ namespace Checkmate
                         // 5. if they dont match then enable the ones that do not match
 
                         // board.AttackingMoves();
+                        
+                        // add attacking piece moves past the kings move
+                        
                         board.KingsLegalMove(this, currentPiece.GetPieceColor());
                     }
 
+
+
+                    for (int i = 0; i < board.Size; i++)
+                    {
+                        for (int j = 0; j < board.Size; j++)
+                        {
+                            if (board.board[i, j].GetChessPiece() != null)
+                            {
+                                if (!(board.board[i, j].GetChessPiece() is King))
+                                {
+                                    pieceCounter++;
+                                }
+                            }
+                          
+                        }
+                    }
+
+                    Console.WriteLine(pieceCounter);
+
+                    if (pieceCounter == 0)
+                    {
+                        // creates new homepage instance
+                        HomePage home = new HomePage();
+
+                        // hides chess game
+                        Hide();
+
+                        // shows homepage
+                        home.ShowDialog();
+
+                        // closes chess game
+                        Close();
+                    }
+                    
+                    pieceCounter = 0;
+                    
+                    
+                    
+                    
+                    
 
                     label_debug.Text = "" + kingState;
 

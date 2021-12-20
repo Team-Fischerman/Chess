@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 
 namespace Checkmate.ChessPieces
@@ -14,7 +15,8 @@ namespace Checkmate.ChessPieces
         private void DiagonalAttackWhite(ChessBoard board, Point location)
         {
             // Highlights left diagonal for white pawn
-            if (isSafe(location.X - 1, location.Y - 1) && board.board[location.X - 1, location.Y - 1].IsOccupied &&
+            if (isSafe(location.X - 1, location.Y - 1) &&
+                board.board[location.X - 1, location.Y - 1].IsOccupied &&
                 board.board[location.X - 1, location.Y - 1].GetChessPiece().GetPieceColor() == PieceColor.BLACK)
             {
                 board.board[location.X - 1, location.Y - 1].IsLegal = true;
@@ -22,8 +24,27 @@ namespace Checkmate.ChessPieces
 
 
             // Highlights right diagonal for white pawn
-            if (isSafe(location.X - 1, location.Y + 1) && board.board[location.X - 1, location.Y + 1].IsOccupied &&
+            if (isSafe(location.X - 1, location.Y + 1) &&
+                board.board[location.X - 1, location.Y + 1].IsOccupied &&
                 board.board[location.X - 1, location.Y + 1].GetChessPiece().GetPieceColor() == PieceColor.BLACK)
+            {
+                board.board[location.X - 1, location.Y + 1].IsLegal = true;
+            }
+        }
+
+        private void DiagonalAttackWhite2(ChessBoard board, Point location)
+        {
+            // Highlights left diagonal for white pawn
+            if (isSafe(location.X - 1, location.Y - 1) &&
+                !board.board[location.X - 1, location.Y - 1].IsOccupied)
+            {
+                board.board[location.X - 1, location.Y - 1].IsLegal = true;
+            }
+
+
+            // Highlights right diagonal for white pawn
+            if (isSafe(location.X - 1, location.Y + 1) &&
+                !board.board[location.X - 1, location.Y + 1].IsOccupied)
             {
                 board.board[location.X - 1, location.Y + 1].IsLegal = true;
             }
@@ -33,33 +54,61 @@ namespace Checkmate.ChessPieces
         private void DiagonalAttackBlack(ChessBoard board, Point location)
         {
             // Highlights left diagonal for black pawn
-            if (isSafe(location.X + 1, location.Y - 1) && board.board[location.X + 1, location.Y - 1].IsOccupied &&
+            if (isSafe(location.X + 1, location.Y - 1) &&
+                board.board[location.X + 1, location.Y - 1].IsOccupied &&
                 board.board[location.X + 1, location.Y - 1].GetChessPiece().GetPieceColor() == PieceColor.WHITE)
             {
                 board.board[location.X + 1, location.Y - 1].IsLegal = true;
             }
 
             // Highlights right diagonal for black pawn
-            if (isSafe(location.X + 1, location.Y + 1) && board.board[location.X + 1, location.Y + 1].IsOccupied &&
+            if (isSafe(location.X + 1, location.Y + 1) &&
+                board.board[location.X + 1, location.Y + 1].IsOccupied &&
                 board.board[location.X + 1, location.Y + 1].GetChessPiece().GetPieceColor() == PieceColor.WHITE)
             {
                 board.board[location.X + 1, location.Y + 1].IsLegal = true;
             }
         }
 
-
-        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
+        private void DiagonalAttackBlack2(ChessBoard board, Point location)
         {
-            throw new System.NotImplementedException();
+            // Highlights left diagonal for black pawn
+            if (isSafe(location.X + 1, location.Y - 1) &&
+                board.board[location.X + 1, location.Y - 1].IsOccupied)
+            {
+                board.board[location.X + 1, location.Y - 1].IsLegal = true;
+            }
+
+            // Highlights right diagonal for black pawn
+            if (isSafe(location.X + 1, location.Y + 1) &&
+                board.board[location.X + 1, location.Y + 1].IsOccupied)
+            {
+                board.board[location.X + 1, location.Y + 1].IsLegal = true;
+            }
+        }
+
+
+  
+
+        protected override void KingPawnLegalMove(ChessBoard board, Point location)
+        {
+            if (IsBlack())
+            {
+                Console.WriteLine("Black diagonal");
+                DiagonalAttackBlack2(board, location);
+            }
+            
+            
+            if (IsWhite())
+            {
+                Console.WriteLine("White diagonal");
+                DiagonalAttackWhite2(board, location);
+            }
         }
 
 
         protected override void ShowLegalMoves(ChessBoard board, Point location)
         {
-            // base.ShowLegalMoves(board, location);
-    
-         
-
             // Legal moves for white pawn
             if (pieceColor == PieceColor.WHITE)
             {
@@ -70,17 +119,18 @@ namespace Checkmate.ChessPieces
                     {
                         if (isSafe(location.X - 1, location.Y))
                             board.board[location.X - 1, location.Y].IsLegal = true;
-                    
+
                         if (!board.board[location.X - 2, location.Y].IsOccupied)
                         {
                             if (isSafe(location.X - 2, location.Y))
                                 board.board[location.X - 2, location.Y].IsLegal = true;
                         }
                     }
-                    
-                  
 
+
+                  
                     DiagonalAttackWhite(board, location);
+              
                 }
                 // Once pawn has moved then the pawn can only move up one cells
                 else
@@ -90,7 +140,7 @@ namespace Checkmate.ChessPieces
                         if (isSafe(location.X - 1, location.Y))
                             board.board[location.X - 1, location.Y].IsLegal = true;
                     }
-
+                    
                     DiagonalAttackWhite(board, location);
                 }
             }
@@ -104,17 +154,17 @@ namespace Checkmate.ChessPieces
                     {
                         if (isSafe(location.X + 1, location.Y))
                             board.board[location.X + 1, location.Y].IsLegal = true;
-                    
-                    
+
+
                         if (!board.board[location.X + 2, location.Y].IsOccupied)
                         {
                             if (isSafe(location.X + 2, location.Y))
                                 board.board[location.X + 2, location.Y].IsLegal = true;
                         }
                     }
-                    
-                    
 
+
+                    
                     DiagonalAttackBlack(board, location);
                 }
                 else

@@ -13,6 +13,7 @@ namespace Checkmate
     {
         protected PieceColor pieceColor;
         protected bool hasMoved;
+        protected bool flag;
         
         protected List<Point> protectingMoves = new List<Point>();
         
@@ -41,32 +42,34 @@ namespace Checkmate
         }
 
 
+        public void PawnLegalMove(ChessBoard board, Point location)
+        {
+            KingPawnLegalMove(board,location);
+        }
+
+
+        protected virtual void KingPawnLegalMove(ChessBoard board, Point location)
+        {
+            
+        }
+
         protected abstract void ShowLegalMoves(ChessBoard board, Point location);
 
-        protected abstract void ShowCheckLegalMoves(ChessBoard board, Point location);
+      
 
-
-        public  void EnablingLegalMoves(ChessBoard board, Point location)
+        public void EnablingLegalMoves(ChessBoard board, Point location)
         {
             
             board.ClearBoard();
             ShowLegalMoves(board,location);
-            // switch (Chess.kingState)
-            // {
-            //     case Chess.State.Normal:
-            //         ShowNormalLegalMoves(board, location);
-            //         break;
-            //     case Chess.State.Check:
-            //         ShowCheckLegalMoves(board, location);
-            //         break;
-            // }
-
+            
         }
         
         
         protected virtual void AddPotentialMoves(ChessBoard board, Point location)
         {
             ClearProtectingMoves();
+            
         }
         
         private void ClearProtectingMoves()
@@ -75,6 +78,8 @@ namespace Checkmate
             {
                 protectingMoves.Clear(); 
             }
+            
+            
             
         }
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using Checkmate.ChessPieces;
 
 namespace Checkmate
@@ -13,7 +14,7 @@ namespace Checkmate
         public ChessPiece _piece { get; set; }
 
         private List<Point> kingsAvailableMoves = new List<Point>();
-        
+
         private List<Point> attackingMoves = new List<Point>();
 
 
@@ -21,7 +22,8 @@ namespace Checkmate
         {
             Size = 8;
             board = new Cell[Size, Size];
-
+            
+            
             if (normal)
             {
                 InitializeBoard();
@@ -118,6 +120,7 @@ namespace Checkmate
 
         public void KingsLegalMove(Chess chess, ChessPiece.PieceColor pieceColor)
         {
+            bool flag = true;
             Console.WriteLine(@"Entering KingsLegalMove()");
 
             if (kingsAvailableMoves.Count != 0)
@@ -143,7 +146,15 @@ namespace Checkmate
                     {
                         if (pieceColor == _piece.GetPieceColor())
                         {
-                            GeneratingKingLegalMove(_piece, i, j);
+                            if (!(_piece is Pawn))
+                            {
+                                GeneratingKingLegalMove(_piece, i, j);
+                            }
+                            else
+                            {
+                                _piece.PawnLegalMove(this, new Point(i, j));
+                                _piece.LegalMove(this, kingsAvailableMoves);
+                            }
                         }
                     }
                 }

@@ -11,7 +11,9 @@ namespace Checkmate.ChessPieces
         }
 
 
-        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
+        
+
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
         {
             for (int i = 1; i < board.Size; i++)
             {
@@ -111,30 +113,14 @@ namespace Checkmate.ChessPieces
             }
         }
 
-        protected override void ShowLegalMoves(ChessBoard board, Point location)
-        {
-            ShowCheckLegalMoves(board, location);
-            // switch (Chess.kingState)
-            // {
-            //     case Chess.State.Normal:
-            //         ShowCheckLegalMoves(board,location);
-            //         break;
-            //     case Chess.State.Check:
-            //         AddPotentialMoves(board,location);
-            //         EnableProtectedMoves(board,protectingMoves,board.GetAttackingList());
-            //         break;
-            //     
-            // }
-        }
-
 
         // NOT USED
         protected override void AddPotentialMoves(ChessBoard board, Point location)
         {
-            base.AddPotentialMoves(board, location);
-            ShowCheckLegalMoves(board, location);
-            LegalMove(board, protectingMoves);
-            board.ClearBoard();
+            // base.AddPotentialMoves(board, location);
+            // ShowCheckLegalMoves(board, location);
+            // LegalMove(board, protectingMoves);
+            // board.ClearBoard();
         }
     }
 }

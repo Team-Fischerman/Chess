@@ -10,10 +10,7 @@ namespace Checkmate.ChessPieces
         }
 
 
-        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
         protected override void ShowLegalMoves(ChessBoard board, Point location)
         {

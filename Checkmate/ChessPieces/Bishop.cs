@@ -13,8 +13,19 @@ namespace Checkmate.ChessPieces
         }
 
 
-        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
+        private void ShowAttackingMoves(ChessBoard board,Point location)
         {
+            // enable legal move past the king
+            board.ClearBoard();
+        }
+
+
+   
+
+        protected override void ShowLegalMoves(ChessBoard board, Point location)
+        {
+            
+            
             for (int i = 1; i < board.Size; i++)
             {
                 if (isSafe(location.X - i, location.Y - i))
@@ -62,36 +73,16 @@ namespace Checkmate.ChessPieces
                     }
                 }
             }
-        }
-
-        protected override void ShowLegalMoves(ChessBoard board, Point location)
-        {
-            
-            
-            ShowCheckLegalMoves(board, location);
-            // switch (Chess.kingState)
-            // {
-            //     case Chess.State.Normal:
-            //     
-            //        ShowCheckLegalMoves(board,location);
-            //        break;
-            //     case Chess.State.Check:
-            //         AddPotentialMoves(board, location);
-            //        // PrintLegalMoves(protectingMoves);
-            //     
-            //         // Now compare the attacking moves with the bishop 
-            //         EnableProtectedMoves(board, protectingMoves, board.GetAttackingList());
-            //         break;
-            // }
+        
         }
 
 
         protected override void AddPotentialMoves(ChessBoard board, Point location)
         {
-            base.AddPotentialMoves(board,location);
-            ShowCheckLegalMoves(board,location);
-            LegalMove(board, protectingMoves);
-            board.ClearBoard();
+            // base.AddPotentialMoves(board,location);
+            // ShowCheckLegalMoves(board,location);
+            // LegalMove(board, protectingMoves);
+            // board.ClearBoard();
         }
     }
 }

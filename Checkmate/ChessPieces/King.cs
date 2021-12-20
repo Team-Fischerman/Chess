@@ -20,10 +20,7 @@ namespace Checkmate.ChessPieces
         }
 
 
-        protected override void ShowCheckLegalMoves(ChessBoard board, Point location)
-        {
-         
-        }
+    
 
         protected override void ShowLegalMoves(ChessBoard board, Point location)
         {
@@ -112,8 +109,6 @@ namespace Checkmate.ChessPieces
             
             // Console.WriteLine("List Moves of piece");
             // PrintLegalMoves(list);
-            
-            
             for (int i = 0; i < _kingMoves.Length; i++)
             {
                 if (!list.Contains(_kingMoves[i]))
